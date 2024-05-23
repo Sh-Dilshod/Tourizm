@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ tour.name }}</title>
+    <!-- Подключаем Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Дополнительные стили для страницы */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0'); /* Изменить на нужное изображение */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.7); /* Чтобы текст был читаемым */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .tour-images {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .tour-images img {
+            width: calc(33.33% - 20px);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .tour-images img:hover {
+            transform: scale(1.1);
+        }
+        p {
+            margin-bottom: 10px;
+            font-size: 18px; /* Увеличим размер шрифта для лучшей читаемости */
+        }
+        h1 {
+            color: #ffd700; /* Жёлтый цвет для заголовка */
+        }
+        strong {
+            color: #fa8072; /* Цвет для выделения */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5 mb-4">{{ tour.name }}</h1>
+    <!-- Показываем изображения тура в виде коллажа -->
+    <div class="tour-images">
+        {% for image in tour.images.all %}
+            <img src="{{ image.image.url }}" alt="" data-toggle="modal" data-target="#imageModal{{ forloop.counter }}">
+            <!-- Модальное окно для каждого изображения -->
+            <div class="modal fade" id="imageModal{{ forloop.counter }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <img src="{{ image.image.url }}" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <p>{{ tour.description }}</p>
+    <p><strong>Город:</strong> {{ tour.city }}</p>
+    <p><strong>Адрес:</strong> {{ tour.address }}</p>
+    <p><strong>Рейтинг:</strong> {{ tour.rating }}</p>
+    <p><strong>Цена:</strong> ${{ tour.price }}</p>
+    <p><strong>Продолжительность:</strong> {{ tour.duration_days }} days</p>
+    <!-- Другие поля и информация о туре -->
+</div>
+
+<!-- Подключаем Bootstrap JS (необходим для работы модальных окон) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
